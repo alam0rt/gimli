@@ -1,19 +1,19 @@
 #!/usr/local/bin/bash
 exec 1> >(logger -s -t $(basename $0)) 2>&1
-# takes the variables source, dest & email
+# takes the variables SOURCE, DEST & EMAIL
 
-printf "Starting backup of $source to $dest"
+printf "Starting backup of $SOURCE to $DEST\n"
 if pgrep rclone > /dev/null
 then
-	printf '[!] Backup already running\n'
-	printf "Backup job already running on $HOST\n\n$(fortune)" | mail -s "$HOST: backup already in progress" $email
+	printf 'Backup already running\n'
+	printf "Backup job already running on $HOST\n\n$(fortune)" | mail -s "$HOST: backup already in progress" $EMAIL
 	exit 0 
 else
-	printf "[-] Backing up $HOST\n"
+	printf "Starting back up of $HOST\n"
 	rclone sync\
 	--log-file /tmp/rclone.log\
 	-v\
 	--transfers 32\
-	$source $dest
-		printf "Backing up $HOST suceeded! \n\ndf -h:\n $(df -h)\nLast 32 lines of logging:\n$(tail -n 32 /tmp/rclone.log)" | mail -s "$HOST: backup success" $email
+	$SOURCE $DEST
+		printf "Backing up $HOST suceeded! \n\ndf -h:\n $(df -h)\nLast 32 lines of logging:\n$(tail -n 32 /tmp/rclone.log)" | mail -s "$HOST: backup success" $EMAIL
 fi
