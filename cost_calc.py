@@ -6,4 +6,5 @@ proc = subprocess.Popen('du -hs /storage/vault/ | awk \'{print substr($1, 1, len
 size = proc.communicate()[0]
 price = 0.005 * float(size)
 print("Projected cost for " + str(size) + "GB is: $" + str(price))
+print("ZFS quota for /storage/vault is " + str(size) + "/500G")
 
