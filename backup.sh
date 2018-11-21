@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 exec 1> >(logger -s -t $(basename $0)) 2>&1
 # takes the variables source, dest & email
 
