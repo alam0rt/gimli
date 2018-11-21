@@ -1,11 +1,8 @@
-#!/bin/sh
+#!/bin/bash
+exec 1> >(logger -s -t $(basename $0)) 2>&1
+# takes the variables source, dest & email
 
-HOST=gimli
-
-source="/storage/vault"
-dest="cloud:gimlivault"
-email="samlockart@gmail.com"
-cd /root
+printf "Starting backup of $source to $dest"
 if pgrep rclone > /dev/null
 then
 	printf '[!] Backup already running\n'
