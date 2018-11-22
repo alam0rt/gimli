@@ -11,7 +11,7 @@ perform_backup() {
 	--transfers 32\
 	$SOURCE $DEST
 	rc=$?
-	if [[ $rc != 0 ]]; then send_mail_and_print "Backup failed with exit code $rc! $(tail -n 5 /tmp/rclone)" "Backup failed!"; exit $rc; fi
+	if [[ $rc != 0 ]]; then send_mail_and_print() "Backup failed with exit code $rc! $(tail -n 5 /tmp/rclone)" "Backup failed!"; exit $rc; fi
 
 send_mail_and_print() {
 # this function is similar to tee in that when passed 2 values it will send an email off as well as output to stdout (syslog)
@@ -26,5 +26,5 @@ then
 	exit 1
 else
 	perform_backup()
-	send_mail_and_print "$(./cost_calc.py)" "Backup has begun!"
+	send_mail_and_print() "$(./cost_calc.py)" "Backup has begun!"
 fi
